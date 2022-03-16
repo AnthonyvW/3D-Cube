@@ -25,10 +25,12 @@ void TriangleFace(GLfloat A[], GLfloat B[], GLfloat C0, GLfloat C1, GLfloat C2) 
 }
 
 void DrawCube(GLfloat v[][3]) {
+	glEnable(GL_CULL_FACE);
 	// Set Color to Blue
+	
 	glColor3f(0, 0, 1);
 	// Front Face
-	TriangleFace(v[2], v[1], 0, 0.5, 0.5);
+	TriangleFace(v[1], v[2], 0, 0.5, 0.5);
 	TriangleFace(v[3], v[0], 0, 0.5, 0.5);
 	// Back Face
 	TriangleFace(v[6], v[5], 0, 0.5, -0.5);
@@ -37,19 +39,21 @@ void DrawCube(GLfloat v[][3]) {
 	TriangleFace(v[7], v[4], -0.5, 0.5, 0);
 	TriangleFace(v[0], v[3], -0.5, 0.5, 0);
 	// Right Face
-	TriangleFace(v[6], v[5], 0.5, 0.5, 0);
-	TriangleFace(v[1], v[2], 0.5, 0.5, 0); 
+	TriangleFace(v[5], v[6], 0.5, 0.5, 0);
+	TriangleFace(v[2], v[1], 0.5, 0.5, 0); 
 	// Top Face
-	RectFace(v[0], v[1], v[5], v[4]);
+	RectFace(v[4], v[5], v[1], v[0]);
 
 	// Set Color to Yellow
 	glColor3f(1, 1, 0);
 	// Bottom Face
 	RectFace(v[3], v[2], v[6], v[7]);
 	// Yellow Triangles
+	
+	glColor3f(1, 1, 0);
 	TriangleFace(v[2], v[3], 0, 0.5, 0.5); // Front Triangle
-	TriangleFace(v[6], v[7], 0, 0.5, -0.5);// Back Triangle
-	TriangleFace(v[7], v[3], -0.5, 0.5, 0);// Left Triangle
+	TriangleFace(v[7], v[6], 0, 0.5, -0.5);// Back Triangle
+	TriangleFace(v[3], v[7], -0.5, 0.5, 0);// Left Triangle
 	TriangleFace(v[6], v[2], 0.5, 0.5, 0); // Right Triangle
 	
 	// Draw Wireframe Cube
@@ -62,14 +66,15 @@ void DrawCube(GLfloat v[][3]) {
 	glColor3f(0, 0, 0);
 	// Render Wireframe Cube Faces
 	RectFace(v[0], v[1], v[2], v[3]); // Front
-	RectFace(v[4], v[5], v[6], v[7]); // Back
+	RectFace(v[7], v[6], v[5], v[4]); // Back
 	RectFace(v[0], v[3], v[7], v[4]); // Left
-	RectFace(v[1], v[2], v[6], v[5]); // Right
-	RectFace(v[0], v[1], v[5], v[4]); // Top
+	RectFace(v[5], v[6], v[2], v[1]); // Right
+	RectFace(v[4], v[5], v[1], v[0]); // Top
 	RectFace(v[3], v[2], v[6], v[7]); // Bottom
 	// Disable Wireframe
 	glDisable(GL_POLYGON_OFFSET_LINE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glDisable(GL_CULL_FACE);
 }
 
 void Draw() {
